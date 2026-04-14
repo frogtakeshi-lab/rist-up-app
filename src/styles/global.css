@@ -1,0 +1,590 @@
+/* ===========================
+   Design Tokens
+   =========================== */
+:root {
+  --color-primary: #4f46e5;
+  --color-primary-hover: #4338ca;
+  --color-primary-light: #ede9fe;
+  --color-danger: #ef4444;
+  --color-danger-hover: #dc2626;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #f9fafb;
+  --color-bg: #f3f4f6;
+  --color-border: #e5e7eb;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6b7280;
+  --color-text-muted: #9ca3af;
+  --color-checked-text: #9ca3af;
+  --color-checked-bg: #f9fafb;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+
+  --touch-target: 44px;
+  --fab-size: 56px;
+  --header-height: 56px;
+  --bottom-nav-height: 60px;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.12), 0 4px 6px rgba(0, 0, 0, 0.06);
+  --shadow-fab: 0 4px 12px rgba(79, 70, 229, 0.4);
+
+  --z-nav: 100;
+  --z-fab: 110;
+  --z-modal-backdrop: 200;
+  --z-modal: 210;
+
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-modal: 300ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* ===========================
+   Reset & Base
+   =========================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  height: 100%;
+  height: 100dvh;
+}
+
+body {
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+input, textarea, button {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ===========================
+   App Shell
+   =========================== */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  padding-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom) + var(--space-4));
+}
+
+/* ===========================
+   Header
+   =========================== */
+.header {
+  display: flex;
+  align-items: center;
+  height: var(--header-height);
+  padding: 0 var(--space-2);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+  gap: var(--space-1);
+}
+
+.header-title {
+  flex: 1;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 var(--space-2);
+}
+
+/* ===========================
+   Bottom Nav
+   =========================== */
+.bottom-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  flex-shrink: 0;
+  z-index: var(--z-nav);
+  gap: var(--space-2);
+}
+
+/* ===========================
+   Icon Button
+   =========================== */
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-target);
+  height: var(--touch-target);
+  border-radius: var(--radius-full);
+  color: var(--color-text-secondary);
+  transition: background var(--transition-fast), color var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.icon-btn:hover,
+.icon-btn:active {
+  background: var(--color-surface-elevated);
+  color: var(--color-text-primary);
+}
+
+.icon-btn.danger:hover,
+.icon-btn.danger:active {
+  background: #fef2f2;
+  color: var(--color-danger);
+}
+
+.icon-btn svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ===========================
+   FAB
+   =========================== */
+.fab {
+  position: fixed;
+  bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom) + var(--space-4));
+  right: var(--space-4);
+  width: var(--fab-size);
+  height: var(--fab-size);
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-fab);
+  z-index: var(--z-fab);
+  transition: transform var(--transition-fast), background var(--transition-fast);
+}
+
+.fab:active {
+  transform: scale(0.94);
+  background: var(--color-primary-hover);
+}
+
+.fab svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* ===========================
+   Modal (Bottom Sheet)
+   =========================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: var(--z-modal-backdrop);
+  animation: fadeIn var(--transition-normal) ease forwards;
+}
+
+.modal-backdrop.closing {
+  animation: fadeOut var(--transition-normal) ease forwards;
+}
+
+.modal-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  z-index: var(--z-modal);
+  padding: var(--space-4);
+  padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
+  animation: slideUp var(--transition-modal) forwards;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.modal-sheet.closing {
+  animation: slideDown var(--transition-modal) forwards;
+}
+
+.modal-handle {
+  width: 36px;
+  height: 4px;
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+  margin: 0 auto var(--space-4);
+}
+
+.modal-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin-bottom: var(--space-4);
+  color: var(--color-text-primary);
+}
+
+/* Confirm Dialog (centered) */
+.confirm-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  z-index: var(--z-modal);
+  padding: var(--space-6);
+  width: min(320px, calc(100vw - 48px));
+  box-shadow: var(--shadow-lg);
+  animation: scaleIn var(--transition-normal) forwards;
+}
+
+.confirm-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+}
+
+.confirm-message {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-5);
+  font-size: var(--font-size-sm);
+}
+
+.confirm-actions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: flex-end;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(0); }
+  to { transform: translateY(100%); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* ===========================
+   Form Elements
+   =========================== */
+.text-input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.text-input:focus {
+  border-color: var(--color-primary);
+}
+
+/* ===========================
+   Buttons
+   =========================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  transition: background var(--transition-fast), opacity var(--transition-fast);
+  min-height: var(--touch-target);
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: white;
+}
+
+.btn-primary:hover,
+.btn-primary:active {
+  background: var(--color-primary-hover);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-text-secondary);
+}
+
+.btn-ghost:hover,
+.btn-ghost:active {
+  background: var(--color-surface-elevated);
+}
+
+.btn-danger {
+  background: var(--color-danger);
+  color: white;
+}
+
+.btn-danger:hover,
+.btn-danger:active {
+  background: var(--color-danger-hover);
+}
+
+/* ===========================
+   List Cards (Lists Screen)
+   =========================== */
+.screen-content {
+  padding: var(--space-4);
+}
+
+.lists-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.list-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.list-card:active {
+  transform: scale(0.98);
+  box-shadow: none;
+}
+
+.list-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.list-card-name {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+
+.list-card-meta {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.list-card-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-full);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.list-card-actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ===========================
+   Items Screen
+   =========================== */
+.items-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.items-section-label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: var(--space-4) var(--space-4) var(--space-2);
+}
+
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  min-height: var(--touch-target);
+  transition: background var(--transition-fast);
+}
+
+.item-row:first-child {
+  border-top: 1px solid var(--color-border);
+}
+
+.item-row.checked {
+  background: var(--color-checked-bg);
+}
+
+.item-checkbox {
+  width: var(--touch-target);
+  height: var(--touch-target);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.item-checkbox svg {
+  width: 24px;
+  height: 24px;
+  transition: color var(--transition-fast);
+}
+
+.item-text-wrap {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-2) 0;
+  cursor: pointer;
+}
+
+.item-text {
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  word-break: break-word;
+  line-height: 1.4;
+  transition: color var(--transition-fast), text-decoration var(--transition-fast);
+}
+
+.item-text.checked {
+  color: var(--color-checked-text);
+  text-decoration: line-through;
+}
+
+/* ===========================
+   Form in Modal
+   =========================== */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.modal-form-actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.modal-form-actions .btn {
+  flex: 1;
+}
+
+/* ===========================
+   Empty State
+   =========================== */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  text-align: center;
+  min-height: 200px;
+  gap: var(--space-3);
+}
+
+.empty-state-icon {
+  font-size: 48px;
+  line-height: 1;
+}
+
+.empty-state-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.empty-state-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  max-width: 240px;
+}

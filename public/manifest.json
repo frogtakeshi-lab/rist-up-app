@@ -1,0 +1,16 @@
+{
+  "name": "リストアップ",
+  "short_name": "リストアップ",
+  "description": "スマホで使う汎用メモリストアプリ",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f3f4f6",
+  "theme_color": "#4f46e5",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
